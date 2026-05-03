@@ -1,13 +1,15 @@
 package com.example.microchatnotificationservice.controller.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record NotificationEventDto(
-        UUID eventId,
-        Long senderId,
-        Long receiverId,
-        String type,
-        String content,
-        LocalDateTime timestamp
+        @NotNull UUID eventId,
+        @NotNull Long senderId,
+        @NotNull Long receiverId,
+        @NotNull String type,
+        @NotNull String content,
+        @NotNull LocalDateTime timestamp
 ) {}

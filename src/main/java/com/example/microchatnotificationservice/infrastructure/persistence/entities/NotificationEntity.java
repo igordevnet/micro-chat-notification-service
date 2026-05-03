@@ -34,5 +34,8 @@ public class NotificationEntity {
     private String content;
 
     @Column(nullable = false)
+    private Boolean read;
+
+    @Column(nullable = false)
     private LocalDateTime timestamp;
 }

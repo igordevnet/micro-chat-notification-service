@@ -1,22 +1,84 @@
 package com.example.microchatnotificationservice.application.usecases;
 
+import com.example.microchatnotificationservice.application.exceptions.UnauthorizedActionException;
+import com.example.microchatnotificationservice.application.gateways.MessageBrokerGateway;
+import com.example.microchatnotificationservice.application.gateways.NotificationGateway;
+import com.example.microchatnotificationservice.controller.dto.response.NotificationPaginatedResponse;
 import com.example.microchatnotificationservice.controller.dto.response.NotificationResponse;
+import com.example.microchatnotificationservice.domain.Notification;
+import com.example.microchatnotificationservice.infrastructure.persistence.mapper.NotificationMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class NotificationUseCase {
 
-    public Notificaton saveNotification(Notification notification) {
+    private final MessageBrokerGateway messageBrokerGateway;
+    private final NotificationGateway notificationGateway;
+    private final NotificationMapper notificationMapper;
 
+    @Transactional
+    @CacheEvict(value = "notifications", key = "#notification.receiverId")
+    public void saveNotification(Notification notification) {
+        var savedNotification = notificationGateway.saveNotification(notification);
+
+        var notificationResponse = notificationMapper.domainToResponse(savedNotification);
+
+        sendToBroker(notificationResponse);
     }
 
-    public List<NotificationResponse> getRecentNotifications(Long id) {
+    @Cacheable(value = "notifications", key = "#userId")
+    public NotificationPaginatedResponse getRecentNotifications(Long userId, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Notification> notificationPage = notificationGateway.getRecentNotifications(userId, pageable);
+
+        List<NotificationResponse> responses = notificationPage.getContent()
+                .stream()
+                .map(notificationMapper::domainToResponse)
+                .toList();
+
+        return NotificationPaginatedResponse.builder()
+                .content(responses)
+                .currentPage(notificationPage.getNumber())
+                .totalPages(notificationPage.getTotalPages())
+                .totalElements(notificationPage.getTotalElements())
+                .build();
     }
 
-    public void markAsRead(String notificationId, Long id) {
+    @Transactional
+    @CacheEvict(value = "notifications", key = "#userId")
+    public void markAsRead(UUID notificationId, Long userId) {
+        Notification notification = notificationGateway.getNotificationById(notificationId);
+
+        throwIfUserCannotMarkAsRead(notification.getReceiverId(), userId);
+        notification.setRead(true);
+
+        notificationGateway.saveNotification(notification);
+    }
+
+    private void sendToBroker(NotificationResponse response) {
+        messageBrokerGateway.convertAndSend(
+                "amq.topic",
+                "notification" + response.receiverId(),
+                response
+                );
+    }
+
+    private void throwIfUserCannotMarkAsRead(Long receiverId, Long userId) {
+        if (!receiverId.equals(userId)) {
+            throw new UnauthorizedActionException("You can't read this notification");
+        }
     }
 }

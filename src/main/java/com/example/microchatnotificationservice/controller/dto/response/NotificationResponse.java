@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record NotificationResponse(
-        UUID eventId,
+        UUID id,
         Long senderId,
         Long receiverId,
         String type,
