@@ -1,3 +1,53 @@
+server:
+  port: 8083
+
 spring:
   application:
     name: micro-chat-notification-service
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/db_micro_chat}
+    username: ${SPRING_DATASOURCE_USERNAME:user}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    mongodb:
+      uri: mongodb://admin:password@localhost:27017/chat_messages_db?authSource=admin
+
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: 6379
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: 5672
+    queue:
+      name: notification.events.queue
+    client:
+      login: ${SPRING_RABBITMQ_CLIENT_USERNAME:guest}
+      password: ${SPRING_RABBITMQ_CLIENT_PASSWORD:guest}
+    system:
+      login: ${SPRING_RABBITMQ_SYSTEM_USERNAME:guest}
+      password: ${SPRING_RABBITMQ_SYSTEM_PASSWORD:guest}
+
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+
+minio:
+  endpoint: ${MINIO_URL:http://localhost:9000}
+  access-key: ${MINIO_KEY:admin}
+  secret-key: ${MINIO_SECRET:password}
+  bucket-name: ${STORAGE_BUCKET:chat-attachments}
