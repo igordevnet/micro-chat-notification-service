@@ -30,6 +30,8 @@ public class NotificationUseCase {
     @Transactional
     @CacheEvict(value = "notifications", key = "#notification.receiverId")
     public void saveNotification(Notification notification) {
+        notification.setRead(false);
+
         var savedNotification = notificationGateway.saveNotification(notification);
 
         var notificationResponse = notificationMapper.domainToResponse(savedNotification);
@@ -69,9 +71,10 @@ public class NotificationUseCase {
     }
 
     private void sendToBroker(NotificationResponse response) {
+        System.out.println("Im here!!" + response);
         messageBrokerGateway.convertAndSend(
                 "amq.topic",
-                "notification" + response.receiverId(),
+                "notification." + response.receiverId(),
                 response
                 );
     }

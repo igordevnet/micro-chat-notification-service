@@ -27,7 +27,7 @@ public class NotificationEntity {
     @Column(name = "receiver_id", nullable = false)
     private Long receiverId;
 
-    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private String type;
 
     @Column(nullable = false)
