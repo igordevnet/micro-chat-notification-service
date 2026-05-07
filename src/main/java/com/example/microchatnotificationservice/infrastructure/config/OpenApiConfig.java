@@ -1,4 +1,4 @@
-package com.example.microchatnotificationservice.infrastructure;
+package com.example.microchatnotificationservice.infrastructure.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;

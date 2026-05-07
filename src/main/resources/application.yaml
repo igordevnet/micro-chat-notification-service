@@ -20,13 +20,6 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-  data:
-    mongodb:
-      uri: ${MONGODB_DATASOURCE:mongodb://admin:password@localhost:27017/chat_messages_db?authSource=admin}
-
-    redis:
-      host: ${SPRING_DATA_REDIS_HOST:localhost}
-      port: 6379
 
   rabbitmq:
     host: ${SPRING_RABBITMQ_HOST:localhost}
