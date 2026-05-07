@@ -20,13 +20,6 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-  data:
-    mongodb:
-      uri: mongodb://admin:password@localhost:27017/chat_messages_db?authSource=admin
-
-    redis:
-      host: ${SPRING_DATA_REDIS_HOST:localhost}
-      port: 6379
 
   rabbitmq:
     host: ${SPRING_RABBITMQ_HOST:localhost}
@@ -46,8 +39,3 @@ api:
     token:
       secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
 
-minio:
-  endpoint: ${MINIO_URL:http://localhost:9000}
-  access-key: ${MINIO_KEY:admin}
-  secret-key: ${MINIO_SECRET:password}
-  bucket-name: ${STORAGE_BUCKET:chat-attachments}
