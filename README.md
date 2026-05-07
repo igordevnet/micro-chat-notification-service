@@ -7,11 +7,10 @@
 <br/>
 
 [![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)](#)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-brightgreen?style=for-the-badge&logo=spring-boot)](#)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-brightgreen?style=for-the-badge&logo=spring-boot)](#)
 [![RabbitMQ](https://img.shields.io/badge/RabbitMQ-Event_Driven-FF6600?style=for-the-badge&logo=rabbitmq)](#)
 [![Redis](https://img.shields.io/badge/Redis-Caching-DC382D?style=for-the-badge&logo=redis)](#)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?style=for-the-badge&logo=postgresql)](#)
-[![MinIO](https://img.shields.io/badge/MinIO-Object_Storage-C7202C?style=for-the-badge&logo=minio)](#)
 
 </div>
 
@@ -52,15 +51,12 @@ To run this service locally or in a Kubernetes cluster, you must configure the f
 | `SPRING_RABBITMQ_SYSTEM_USERNAME` | Broker admin/system login | `guest` |
 | `SPRING_RABBITMQ_SYSTEM_PASSWORD` | Broker admin/system password | `guest` |
 
-### 🔒 Security & Storage
+### 🔒 Security 
 
 | Variable | Description | Default Fallback |
 | :--- | :--- | :--- |
 | `JWT_SECRET` | Base64 encoded secret for JWT validation | `404E63...` |
-| `MINIO_URL` | S3-compatible object storage endpoint | `http://localhost:9000` |
-| `MINIO_KEY` | MinIO access key | `admin` |
-| `MINIO_SECRET` | MinIO secret key | `password` |
-| `STORAGE_BUCKET` | Default bucket for attachments | `chat-attachments` |
+
 
 <br/>
 
