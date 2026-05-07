@@ -1,7 +1,7 @@
 package com.example.microchatnotificationservice.controller.handler;
 
 import com.example.microchatnotificationservice.application.exceptions.NotificationNotFoundException;
-import com.example.microchatnotificationservice.application.exceptions.UnauthorizedActionException;
+import com.example.microchatnotificationservice.application.exceptions.ForbiddenActionException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +26,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UnauthorizedActionException.class)
-    public ResponseEntity<StandardError> handleMessageNotFoundException(UnauthorizedActionException ex, HttpServletRequest request) {
+    @ExceptionHandler(ForbiddenActionException.class)
+    public ResponseEntity<StandardError> handleForbiddenActionException(ForbiddenActionException ex, HttpServletRequest request) {
         var response = StandardError.builder()
                 .error(ex.getMessage())
                 .path(request.getRequestURI())
                 .timestamp(LocalDate.now())
-                .status(HttpStatus.UNAUTHORIZED.value())
+                .status(HttpStatus.FORBIDDEN.value())
                 .build();
 
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

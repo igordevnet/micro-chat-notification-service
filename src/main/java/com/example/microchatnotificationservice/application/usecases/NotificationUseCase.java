@@ -1,6 +1,6 @@
 package com.example.microchatnotificationservice.application.usecases;
 
-import com.example.microchatnotificationservice.application.exceptions.UnauthorizedActionException;
+import com.example.microchatnotificationservice.application.exceptions.ForbiddenActionException;
 import com.example.microchatnotificationservice.application.gateways.MessageBrokerGateway;
 import com.example.microchatnotificationservice.application.gateways.NotificationGateway;
 import com.example.microchatnotificationservice.controller.dto.response.NotificationPaginatedResponse;
@@ -81,7 +81,7 @@ public class NotificationUseCase {
 
     private void throwIfUserCannotMarkAsRead(Long receiverId, Long userId) {
         if (!receiverId.equals(userId)) {
-            throw new UnauthorizedActionException("You can't read this notification");
+            throw new ForbiddenActionException("You can't read this notification");
         }
     }
 }
