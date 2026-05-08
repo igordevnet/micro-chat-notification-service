@@ -24,6 +24,10 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 @Server(
                         description = "Local ENV",
                         url = "http://localhost:8080"
+                ),
+                @Server(
+                        description = "Kubernetes Cluster (API Gateway)",
+                        url = "http://api.microchat.local"
                 )
         },
         security = {
