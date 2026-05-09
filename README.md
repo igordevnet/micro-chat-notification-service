@@ -38,7 +38,8 @@ To run this service locally or in a Kubernetes cluster, you must configure the f
 | `SPRING_DATASOURCE_URL` | PostgreSQL connection string | `jdbc:postgresql://localhost:5432/db_micro_chat` |
 | `SPRING_DATASOURCE_USERNAME` | PostgreSQL username | `user` |
 | `SPRING_DATASOURCE_PASSWORD` | PostgreSQL password | `password` |
-| `SPRING_DATA_REDIS_HOST` | Redis instance host | `localhost` |
+| `SPRING_DATA_REDIS_HOST` | Redis host               | `localhost`      |
+| `SPRING_DATA_REDIS_PORT` | Redis port               | `6379`           |
 
 ### 🐇 Message Broker (RabbitMQ)
 
