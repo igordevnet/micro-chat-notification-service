@@ -27,6 +27,10 @@ public class NotificationEntity {
     @Column(name = "receiver_id", nullable = false)
     private Long receiverId;
 
+
+    @Column(name = "chat_id", nullable = false)
+    private UUID chatId;
+
     @Column(nullable = false)
     private String type;
 

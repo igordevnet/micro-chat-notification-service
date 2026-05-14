@@ -20,6 +20,8 @@ public class Notification {
 
     private Long receiverId;
 
+    private UUID chatId;
+
     private String type;
 
     private String content;
