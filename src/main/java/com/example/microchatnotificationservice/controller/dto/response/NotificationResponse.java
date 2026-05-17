@@ -7,7 +7,7 @@ public record NotificationResponse(
         UUID id,
         Long senderId,
         Long receiverId,
-        UUID chatID,
+        UUID chatId,
         String type,
         Boolean read,
         String content,

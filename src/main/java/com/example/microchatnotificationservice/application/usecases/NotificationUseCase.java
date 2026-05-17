@@ -45,11 +45,13 @@ public class NotificationUseCase {
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Notification> notificationPage = notificationGateway.getRecentNotifications(userId, pageable);
-
+        
         List<NotificationResponse> responses = notificationPage.getContent()
                 .stream()
                 .map(notificationMapper::domainToResponse)
                 .toList();
+
+        System.out.println(responses);
 
         return NotificationPaginatedResponse.builder()
                 .content(responses)
