@@ -33,6 +33,7 @@ public class NotificationRepositoryGateway implements NotificationGateway {
     public Page<Notification> getRecentNotifications(Long userId, Pageable pageable) {
         Page<NotificationEntity> notificationEntities = notificationRepository.findByReceiverId(userId, pageable);
 
+        System.out.println(notificationEntities);
         return notificationEntities.map(notificationMapper::entityToDomain);
     }
 
